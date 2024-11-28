@@ -83,20 +83,7 @@ def responder_con_gemini(message):
     respuesta = model.generate_content("siempre vas a responder las preguntas en un lenguaje jovial" + pregunta)
     bot.send_message(message.chat.id, respuesta.text)
     mostrar_menu(message)
-"""
 
-    try:
-        # Usar Google Generative AI para generar la respuesta
-        respuesta = genai.generate_message(prompt=pregunta, model='models/chat-bison-001')
-        if respuesta and hasattr(respuesta, 'candidates') and len(respuesta.candidates) > 0:
-            texto_respuesta = respuesta.candidates[0]['output']
-            bot.send_message(message.chat.id, texto_respuesta.strip())
-        else:
-            bot.send_message(message.chat.id, "Gemini no pudo generar una respuesta.")
-    except Exception as e:
-        bot.send_message(message.chat.id, f"Error al generar la respuesta con Gemini: {e}")
-    
-"""
 
 # Iniciar el bot
 bot.polling()
