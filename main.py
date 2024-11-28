@@ -8,6 +8,8 @@ from datetime import datetime
 API_KEY = "AIzaSyBVkx-mK8oTpNxo1v0OVwuneUxwXio8-D8"
 genai.configure(api_key=API_KEY)
 
+model = genai.GenerativeModel('gemini-1.5-flash-latest')
+
 # Token del bot de Telegram
 TELEGRAM_BOT_TOKEN = "7766374394:AAGuiC0QcqkHi9oR72DXv3xpvez3H6S2W-M"
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
@@ -78,6 +80,11 @@ def obtener_clima_y_efemeride(message):
 # Función para responder usando Gemini
 def responder_con_gemini(message):
     pregunta = message.text
+    respuesta = model.generate_content("siempre vas a responder las preguntas en un lenguaje jovial" + pregunta)
+    bot.send_message(message.chat.id, respuesta.text)
+    mostrar_menu(message)
+"""
+
     try:
         # Usar Google Generative AI para generar la respuesta
         respuesta = genai.generate_message(prompt=pregunta, model='models/chat-bison-001')
@@ -88,8 +95,8 @@ def responder_con_gemini(message):
             bot.send_message(message.chat.id, "Gemini no pudo generar una respuesta.")
     except Exception as e:
         bot.send_message(message.chat.id, f"Error al generar la respuesta con Gemini: {e}")
-
-    mostrar_menu(message)
+    
+"""
 
 # Iniciar el bot
 bot.polling()
